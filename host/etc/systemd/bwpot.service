@@ -1,0 +1,27 @@
+[Unit]
+Description=bwpot
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutSec=infinity
+
+ExecStartPre=/opt/bwpot/etc/bwpot/setCredencials.sh
+
+ExecStartPre=-/opt/bwpot/etc/logrotate/logrotate.sh
+ExecStartPre=-/usr/local/bin/docker-compose -f /opt/bwpot/etc/bwpot/docker-compose.yml down -v
+ExecStartPre=-/usr/local/bin/docker-compose -f /opt/bwpot/etc/bwpot/docker-compose.yml rm -v
+ExecStartPre=-/usr/bin/docker system prune --volumes -f
+
+ExecStartPre=/opt/bwpot/etc/bwpot/setIptables.sh set
+
+ExecStart=/usr/local/bin/docker-compose -f /opt/bwpot/etc/bwpot/docker-compose.yml up --no-color --build
+
+ExecStop=/usr/local/bin/docker-compose -f /opt/bwpot/etc/bwpot/docker-compose.yml down -v
+
+ExecStopPost=/opt/bwpot/etc/bwpot/setIptables.sh unset
+
+[Install]
+WantedBy=multi-user.target

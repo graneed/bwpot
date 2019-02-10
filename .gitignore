@@ -1,0 +1,5 @@
+etc/bwpot/credencials
+etc/bwpot/server.key
+etc/bwpot/server.crt
+etc/fluentd/credencials
+etc/fluentd/service_account_key.json

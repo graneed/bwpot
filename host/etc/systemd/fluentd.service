@@ -1,0 +1,21 @@
+[Unit]
+Description=fluentd
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+RestartSec=5
+TimeoutSec=infinity
+
+ExecStartPre=/opt/bwpot/etc/fluentd/setCredencials.sh
+
+ExecStartPre=-/usr/local/bin/docker-compose -f /opt/bwpot/etc/fluentd/docker-compose.yml down -v
+ExecStartPre=-/usr/local/bin/docker-compose -f /opt/bwpot/etc/fluentd/docker-compose.yml rm -v
+
+ExecStart=/usr/local/bin/docker-compose -f /opt/bwpot/etc/fluentd/docker-compose.yml up --no-color --build
+
+ExecStop=/usr/local/bin/docker-compose -f /opt/bwpot/etc/fluentd/docker-compose.yml down -v
+
+[Install]
+WantedBy=multi-user.target

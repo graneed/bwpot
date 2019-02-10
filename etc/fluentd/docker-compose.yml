@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  fluentd:
+    build: ../../docker/fluentd
+    container_name: fluentd
+    restart: always
+    environment:
+      TZ: Asia/Tokyo
+      FLUENTD_OPT: -v
+      FLUENTD_CONF: fluent.conf
+    volumes:
+      - ./service_account_key.json:/fluentd/etc/service_account_key.json
+      - /data/nginx/log:/var/log/nginx
+      - /data/tshark/log:/var/log/tshark

@@ -1,0 +1,20 @@
+WORDPRESS_URL='http://example.com/'
+WORDPRESS_TITLE='example'
+WORDPRESS_USER='admin'
+WORDPRESS_PASSWORD='password'
+WORDPRESS_EMAIL='admin@example.com'
+
+PHPMYADMIN_PASSWORD='password'
+
+TOMCAT_USERNAME='tomcat'
+TOMCAT_PASSWORD='s3cret'
+
+WEBLOGIC_USERNAME='weblogic'
+WEBLOGIC_PASSWORD='p@ssword' # requires a minimum password length of 8 characters, of which one is non-alphabetic
+
+NGINX_CSR_Country_Name='JP'
+NGINX_CSR_State_or_Province_Name='Tokyo'
+NGINX_CSR_Locality_Name='Chiyoda-ku'
+NGINX_CSR_Organization_Name='Example Corp.'
+NGINX_CSR_Organizational_Unit_Name='Development Division'
+NGINX_CSR_Common_Name='example.com'

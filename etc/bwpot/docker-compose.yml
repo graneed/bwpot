@@ -1,0 +1,154 @@
+version: '3.7'
+
+networks:
+  nginx_local:
+  wordpress_local:
+  phpmyadmin_local:
+
+volumes:
+  wordpress_volume:
+
+services:
+  wordpress-db:
+    build: ../../docker/wordpress-db
+    container_name: wordpress-db
+    restart: always
+    environment:
+      TZ: Asia/Tokyo
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    networks:
+      - wordpress_local
+
+  wordpress:
+    build: ../../docker/wordpress
+    container_name: wordpress
+    restart: always
+    environment:
+      TZ: Asia/Tokyo
+      WORDPRESS_DB_HOST: wordpress-db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+    volumes:
+      - wordpress_volume:/var/www/html
+    networks:
+      - wordpress_local
+      - nginx_local
+    depends_on:
+      - wordpress-db
+
+  wordpress-cli:
+    build: ../../docker/wordpress-cli
+    container_name: wordpress-cli
+    restart: on-failure
+    environment:
+      TZ: Asia/Tokyo
+    user: xfs
+    volumes:
+      - wordpress_volume:/var/www/html
+    networks:
+      - wordpress_local
+    depends_on:
+      - wordpress-db
+      - wordpress
+    command: >
+      bash -c "
+      wp core install
+      --url='http://example.com/'
+      --title='example'
+      --admin_user='admin'
+      --admin_password='password'
+      --admin_email='admin@example.com'
+      &&
+      wp plugin install relative-url
+      --activate"
+
+  phpmyadmin-db:
+    build: ../../docker/phpmyadmin-db
+    container_name: phpmyadmin-db
+    restart: always
+    environment:
+      TZ: Asia/Tokyo
+      # Don't remove following comment. #phpMyAdmin is replace keyword for init.sh
+      MYSQL_ROOT_PASSWORD: password #phpMyAdmin
+    networks:
+      - phpmyadmin_local
+
+  phpmyadmin:
+    build: ../../docker/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      TZ: Asia/Tokyo
+      PMA_ARBITRARY: 1
+      PMA_HOST: phpmyadmin-db
+    networks:
+      - phpmyadmin_local
+      - nginx_local
+    depends_on:
+      - phpmyadmin-db
+
+  tomcat:
+    build: ../../docker/tomcat
+    container_name: tomcat
+    restart: always
+    environment:
+      TZ: Asia/Tokyo
+    networks:
+      - nginx_local
+
+# Deactivate because it is not covered by OTN license
+#  weblogic:
+#    build: ../../docker/weblogic
+#    container_name: weblogic
+#    restart: always
+#    environment:
+#      TZ: Asia/Tokyo
+#    ports:
+#      - "7001:7001"
+
+  webshell:
+    build: ../../docker/webshell
+    container_name: webshell
+    restart: always
+    environment:
+      TZ: Asia/Tokyo
+    networks:
+      - nginx_local
+
+  wowhoneypot:
+    build: ../../docker/wowhoneypot
+    container_name: wowhoneypot
+    restart: always
+    environment:
+      TZ: Asia/Tokyo
+    networks:
+      - nginx_local
+
+  nginx:
+    build: ../../docker/nginx
+    container_name: nginx
+    restart: always
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /data/nginx/log:/var/log/nginx
+    networks:
+      - nginx_local
+
+  tshark:
+    build: ../../docker/tshark
+    container_name: tshark
+    restart: always
+    environment:
+      TZ: Asia/Tokyo
+    volumes:
+      - /data/tshark/log:/tshark/log
+      - /data/tshark/dump:/tshark/dump
+    network_mode: host

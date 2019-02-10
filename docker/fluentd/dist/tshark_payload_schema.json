@@ -1,0 +1,9 @@
+[
+    {"name":"time", "type": "timestamp"},
+    {"name":"src_ip", "type": "string"},
+    {"name":"src_port", "type": "integer"},
+    {"name":"dst_ip", "type": "string"},
+    {"name":"dst_port", "type": "integer"},
+    {"name":"payload_hex", "type": "string"},
+    {"name":"payload_raw", "type": "string"}
+]
