@@ -22,11 +22,13 @@
 # vi /opt/bwpot/etc/bwpot/credencials
 ```
 
-### 1.4. SSH接続ポート用のFirewall設定
-ssh接続ポートを60022以外にしている場合は、iptablesの許可対象のポートを変更してください。
+### 1.4. Firewall設定
+ssh接続ポートを`60022`番ポート以外にしている場合は、iptablesの許可対象のポートを変更してください。
 ```
 # vi /opt/bwpot/etc/bwpot/setIptables.sh
 ```
+
+また、Amazon EC2上に構築する場合は、セキュリティグループのインバウンド設定を編集し、`任意の場所`から`80`、`8080`および`443`番ポートへの接続を許可してください。
 
 ### 1.5. Service化
 ```
