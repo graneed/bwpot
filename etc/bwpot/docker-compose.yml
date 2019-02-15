@@ -82,7 +82,6 @@ services:
     restart: always
     environment:
       TZ: Asia/Tokyo
-      PMA_ARBITRARY: 1
       PMA_HOST: phpmyadmin-db
     networks:
       - phpmyadmin_local
