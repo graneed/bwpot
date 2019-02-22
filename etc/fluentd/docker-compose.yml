@@ -4,7 +4,7 @@ services:
   fluentd:
     build: ../../docker/fluentd
     container_name: fluentd
-    restart: always
+    restart: on-failure
     environment:
       TZ: Asia/Tokyo
       FLUENTD_OPT: -v

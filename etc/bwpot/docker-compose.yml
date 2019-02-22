@@ -12,7 +12,7 @@ services:
   wordpress-db:
     build: ../../docker/wordpress-db
     container_name: wordpress-db
-    restart: always
+    restart: on-failure
     environment:
       TZ: Asia/Tokyo
       MYSQL_ROOT_PASSWORD: wordpress
@@ -25,7 +25,7 @@ services:
   wordpress:
     build: ../../docker/wordpress
     container_name: wordpress
-    restart: always
+    restart: on-failure
     environment:
       TZ: Asia/Tokyo
       WORDPRESS_DB_HOST: wordpress-db:3306
@@ -68,7 +68,7 @@ services:
   phpmyadmin-db:
     build: ../../docker/phpmyadmin-db
     container_name: phpmyadmin-db
-    restart: always
+    restart: on-failure
     environment:
       TZ: Asia/Tokyo
       # Don't remove following comment. #phpMyAdmin is replace keyword for init.sh
@@ -79,7 +79,7 @@ services:
   phpmyadmin:
     build: ../../docker/phpmyadmin
     container_name: phpmyadmin
-    restart: always
+    restart: on-failure
     environment:
       TZ: Asia/Tokyo
       PMA_HOST: phpmyadmin-db
@@ -92,7 +92,7 @@ services:
   tomcat:
     build: ../../docker/tomcat
     container_name: tomcat
-    restart: always
+    restart: on-failure
     environment:
       TZ: Asia/Tokyo
     networks:
@@ -102,7 +102,7 @@ services:
 #  weblogic:
 #    build: ../../docker/weblogic
 #    container_name: weblogic
-#    restart: always
+#    restart: on-failure
 #    environment:
 #      TZ: Asia/Tokyo
 #    ports:
@@ -111,7 +111,7 @@ services:
   webshell:
     build: ../../docker/webshell
     container_name: webshell
-    restart: always
+    restart: on-failure
     environment:
       TZ: Asia/Tokyo
     networks:
@@ -120,7 +120,7 @@ services:
   wowhoneypot:
     build: ../../docker/wowhoneypot
     container_name: wowhoneypot
-    restart: always
+    restart: on-failure
     environment:
       TZ: Asia/Tokyo
     networks:
@@ -129,7 +129,7 @@ services:
   nginx:
     build: ../../docker/nginx
     container_name: nginx
-    restart: always
+    restart: on-failure
     environment:
       TZ: Asia/Tokyo
     ports:
@@ -144,7 +144,7 @@ services:
   tshark:
     build: ../../docker/tshark
     container_name: tshark
-    restart: always
+    restart: on-failure
     environment:
       TZ: Asia/Tokyo
     volumes:
