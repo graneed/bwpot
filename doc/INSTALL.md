@@ -44,6 +44,9 @@ ssh接続ポートを`60022`番ポート以外にしている場合は、iptable
 
 ## 2. Google BigQueryのセットアップ
 
+以下の手順は、Google Cloud Platformが利用可能なGoogleアカウントにログイン済みであることが前提となります。  
+アカウントを持っていない方は、Googleアカウントの作成およびGoogle Cloud Platformのトライアルの開始をしてください。
+
 ### 2.1. プロジェクトの作成
 https://console.cloud.google.com
 
